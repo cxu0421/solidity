@@ -1660,7 +1660,9 @@ MemberList::MemberMap ContractType::nativeMembers(ContractDefinition const*) con
 				&it.second->declaration()
 			));
 	}
-	addNonConflictingAddressMembers(members);
+	// In 0.5.0 address members are not populated into the contract.
+	if (m_contract.sourceUnit().annotation().experimentalFeatures.count(ExperimentalFeature::V050))
+		addNonConflictingAddressMembers(members);
 	return members;
 }
 
