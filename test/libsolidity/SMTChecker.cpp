@@ -79,6 +79,31 @@ BOOST_AUTO_TEST_CASE(simple_overflow)
 	CHECK_WARNING(text, "Overflow (resulting value larger than");
 }
 
+BOOST_AUTO_TEST_CASE(warn_on_typecast)
+{
+	string text = R"(
+		contract C {
+			function f() public pure {
+				uint8(1);
+			}
+		}
+	)";
+	CHECK_WARNING(text, "Assertion checker does not yet implement this expression.");
+}
+
+BOOST_AUTO_TEST_CASE(warn_on_struct)
+{
+	string text = R"(
+		contract C {
+			struct A { uint a; uint b; }
+			function f() public pure {
+				A({ a: 1, b: 2 });
+			}
+		}
+	)";
+	CHECK_WARNING(text, "Assertion checker does not yet implement this expression.");
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 }
